@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/videos/test', 'Videos@test')->name('Videos');
+
+Route::post('/videos/getVideoInfo', 'Videos@getVideoInfo')->name('Videos');
+
