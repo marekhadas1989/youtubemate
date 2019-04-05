@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 Route::get('/videos/test', 'Videos@test')->name('Videos');
 
-Route::post('/videos/getVideoInfo', 'Videos@getVideoInfo')->name('Videos');
+Route::post('/videos/displayVideosInfo', 'Videos@displayVideosInfo')->name('Videos');
 

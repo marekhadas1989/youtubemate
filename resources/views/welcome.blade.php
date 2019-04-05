@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="_token" content="{{csrf_token()}}" />
-    <title>Landing Page - Start Bootstrap Theme</title>
+    <title>YouTube Mate - download any video or playlist from YouTube</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -24,6 +24,26 @@
 </head>
 
 <body>
+
+<style>
+    .parent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
+
+<div class="parent" style="display:none;position:fixed;width:100%;height:100%;background:white;top:0px;left:0px;z-index:1000;opacity:0.8;text-align:center">
+    <div>
+        <img  src="/img/spinner.gif">
+        <h4 style="color:#CE1617;margin-top:20px">
+            Grab yourself a cup of tea, your request is being processed.
+        </h4>
+        <h6 style="color:#CE1617;margin-top:5px">
+            Depends on the amount of videos you are processing it can take a really long while.
+        </h6>
+    </div>
+</div>
 
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
@@ -48,7 +68,7 @@
                             <input type="text" class="form-control form-control-lg" placeholder="Paste link here">
                         </div>
                         <div class="col-12 col-md-3">
-                            <button type="submit" class="btn btn-block btn-lg btn-primary downloadVideo">Download!</button>
+                            <button type="button" class="btn btn-block btn-lg btn-primary downloadVideo">Download!</button>
                         </div>
                     </div>
                 </form>
@@ -58,16 +78,18 @@
 </header>
 
 <!-- Icons Grid -->
-<section class="features-icons text-center">
+<section class="features-icons text-center boxVideos" style="display:none">
+
     <div class="container">
+
         <div class="row">
             <div class="col-lg-4">
                 <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="features-icons-icon d-flex">
                         <i class="icon-screen-desktop m-auto text-primary"></i>
                     </div>
-                    <h3>Fully Responsive</h3>
-                    <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
+                    <h3>Select Video Resulution</h3>
+                    <p class="lead mb-0">Select video resolution or download audio only</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -75,8 +97,8 @@
                     <div class="features-icons-icon d-flex">
                         <i class="icon-layers m-auto text-primary"></i>
                     </div>
-                    <h3>Bootstrap 4 Ready</h3>
-                    <p class="lead mb-0">Featuring the latest build of the new Bootstrap 4 framework!</p>
+                    <h3>Additional features</h3>
+                    <p class="lead mb-0">You can select additional features<br> eg. compress all the downloads</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -84,12 +106,75 @@
                     <div class="features-icons-icon d-flex">
                         <i class="icon-check m-auto text-primary"></i>
                     </div>
-                    <h3>Easy to Use</h3>
-                    <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
+                    <h3>You are all set</h3>
+                    <p class="lead mb-0">You are all set and ready to download selected videos/audios</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="container singleVideo" style="margin-top:20px;border:dotted 2px orange;padding:20px">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                    <img style="width:inherit" class="singleVideoThumbnail">
+                    <h4 class="singleVideoTitle" style="margin-top:10px"></h4>
+
+                </div>
+
+
+                <div class="row" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <h5>Audio Only</h5>
+                        <table class="table DataTable">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Weight</th>
+                                    <th scope="col">Bitrate</th>
+                                    <th scope="col">Extension</th>
+                                    <th scope="col">Codec</th>
+                                    <th scope="col">Select</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="singleAudioFormats"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <h5>Video & Audio</h5>
+                        <table class="table DataTable">
+
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Resolution</th>
+                                <th scope="col">Bitrate</th>
+                                <th scope="col">Extension</th>
+                                <th scope="col">Select</th>
+                            </tr>
+                            </thead>
+
+                            <tbody class="singleVideoFormats"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-success btn-lg">Download</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </section>
 
 
@@ -161,7 +246,7 @@
                         <a href="#">Privacy Policy</a>
                     </li>
                 </ul>
-                <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+                <p class="text-muted small mb-4 mb-lg-0">&copy; YouTube Mate 2019. Copyright All Right.</p>
             </div>
             <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                 <ul class="list-inline mb-0">
@@ -190,6 +275,7 @@
 <script src="/js/jquery.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/alertify.min.js"></script>
+<script src="/js/datatables.min.js"></script>
 <script src="/js/mate.js?v=<?php echo time(); ?>"></script>
 <script type="text/javascript">
     $(function(){
