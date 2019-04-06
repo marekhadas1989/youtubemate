@@ -25,13 +25,107 @@
 
 <body>
 
+
 <style>
+
+    .bd-callout-info{
+        border-left-color: #5bc0de !Important;
+    }
+    .bd-callout {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eee;
+        border-left-width: .25rem;
+        border-radius: .25rem;
+    }
     .parent {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
+
+    .singleAudioFormats tr,
+    .singleVideoFormats tr{
+        cursor:pointer
+    }
+
+    .selectedVideo{
+        background:#218838;
+        color:white
+    }
+
+    .selectedAudio{
+        background:#0069D9;
+        color:white
+    }
+
+    .disabledBox{
+        opacity:0.4;
+    }
+
 </style>
+
+<div class="modal" tabindex="-1" role="dialog" id="aboutModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">About</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This project has been made solely for the testing purposes and it will not be developed in future so please use it carefully.</p>
+                <p>Any issues found will not be addressed in future.</p>
+                <p>This project is intended for private purposes only.</p>
+                <p>And damages caused by using it are totally under your responsibility, what's more you should use it only accordingly to the applicable law in your country.</p>
+                <p>Any data processed in here will be ephemeral for the purpose of the demo. Data will neither be persisted nor stored for further usage anywhere.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="terms">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Terms of Use</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This is demo project, please refer to the about section.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="privacy">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Privacy Policy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This project does not use any cookies or any other related technologies for storing any data about it's users or tracking users in future.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="parent" style="display:none;position:fixed;width:100%;height:100%;background:white;top:0px;left:0px;z-index:1000;opacity:0.8;text-align:center">
     <div>
@@ -40,7 +134,7 @@
             Grab yourself a cup of tea, your request is being processed.
         </h4>
         <h6 style="color:#CE1617;margin-top:5px">
-            Depends on the amount of videos you are processing it can take a really long while.
+            Stay calm, depends on the amount of videos you are processing it can take a really long while.
         </h6>
     </div>
 </div>
@@ -64,8 +158,8 @@
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
                 <form>
                     <div class="form-row">
-                        <div class="col-12 col-md-9 mb-2 mb-md-0">
-                            <input type="text" class="form-control form-control-lg" placeholder="Paste link here">
+                        <div class="col-12 col-md-9 mb-2 mb-md-0 urlLink">
+                            <input type="text" autocomplete="off" class="form-control form-control-lg" placeholder="Paste link here">
                         </div>
                         <div class="col-12 col-md-3">
                             <button type="button" class="btn btn-block btn-lg btn-primary downloadVideo">Download!</button>
@@ -88,8 +182,8 @@
                     <div class="features-icons-icon d-flex">
                         <i class="icon-screen-desktop m-auto text-primary"></i>
                     </div>
-                    <h3>Select Video Resulution</h3>
-                    <p class="lead mb-0">Select video resolution or download audio only</p>
+                    <h3>Select Format</h3>
+                    <p class="lead mb-0">Select video and / or audio stream</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -107,7 +201,7 @@
                         <i class="icon-check m-auto text-primary"></i>
                     </div>
                     <h3>You are all set</h3>
-                    <p class="lead mb-0">You are all set and ready to download selected videos/audios</p>
+                    <p class="lead mb-0">You are all set and ready to download selected videos / audios</p>
                 </div>
             </div>
         </div>
@@ -127,14 +221,45 @@
 
                 <div class="row" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
 
-                    <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="col-md-12 bd-callout bd-callout-info">
+                        <h5>Following options are available:</h5>
+                        <ul class="text-left">
+                            <li>You can download <b>audio stream only</b> by selecting one option from the table located on the left hand side of the screen<code class="highlighter-rouge">(fastest method)</code></li>
+                            <li><b>Video stream only</b> by selecting one option from the table located underneath on the right hand side of the screen<code class="highlighter-rouge">(fastest method)</code></li>
+                            <li>You can select either audio as well as video stream. Both streams will be combined into one file and ready for download thereafter<code class="highlighter-rouge">(slowest method)</code></li>
+                            <li>You can use <b>download default stream</b> option (Single video will be prepared having both video &amp; audio stream combined all together, medium quality)<code class="highlighter-rouge">(medium speed)</code></li>
+                        </ul>
+                        <h5>Caveats:</h5>
+                        <h6 class="text-left">*Selection of both audio &amp; video stream simulataniously can be only done across the same types of used compression or it's derivatives eg. webm to webm, mp4 to m4a.</h6>
+                        <h6 class="text-left">*Undo your selection by clicking again into highlighted row, this will revert back visibility of all available formats.</h6>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
+
+                        <div class="custom-control custom-radio custom-control-inline">
+
+                            <input type="radio" checked="checked" name="format_method" class="custom-control-input" value="1" id="customRadioInline1">
+                            <label class="custom-control-label" for="customRadioInline1">Download default stream</label>
+
+                        </div>
+
+                        <div class="custom-control custom-radio custom-control-inline">
+
+                            <input type="radio" name="format_method" class="custom-control-input" value="2" id="customRadioInline2">
+                            <label class="custom-control-label" for="customRadioInline2">Choose by yourself</label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6 audioTable formatsBox disabledBox">
                         <h5>Audio Only</h5>
-                        <table class="table DataTable">
+                        <table class="table table-hover DataTable">
 
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Weight</th>
+                                    <th scope="col">Size</th>
                                     <th scope="col">Bitrate</th>
                                     <th scope="col">Extension</th>
                                     <th scope="col">Codec</th>
@@ -146,14 +271,14 @@
                         </table>
                     </div>
 
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <h5>Video & Audio</h5>
-                        <table class="table DataTable">
+                    <div class="col-sm-12 col-md-6 col-lg-6 videoTable formatsBox disabledBox">
+                        <h5>Video Only</h5>
+                        <table class="table table-hover DataTable">
 
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Weight</th>
+                                <th scope="col">Size</th>
                                 <th scope="col">Resolution</th>
                                 <th scope="col">Bitrate</th>
                                 <th scope="col">Extension</th>
@@ -166,7 +291,7 @@
                     </div>
 
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-success btn-lg">Download</button>
+                        <button type="button" class="btn btn-success btn-lg downloadSingle">Download</button>
                     </div>
 
                 </div>
@@ -231,19 +356,19 @@
             <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
                 <ul class="list-inline mb-2">
                     <li class="list-inline-item">
-                        <a href="#">About</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#aboutModal">About</a>
                     </li>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">
-                        <a href="#">Contact</a>
+                        <a href="mailto:biznesowy@gmail.com">Contact</a>
                     </li>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">
-                        <a href="#">Terms of Use</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#terms">Terms of Use</a>
                     </li>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">
-                        <a href="#">Privacy Policy</a>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#privacy">Privacy Policy</a>
                     </li>
                 </ul>
                 <p class="text-muted small mb-4 mb-lg-0">&copy; YouTube Mate 2019. Copyright All Right.</p>

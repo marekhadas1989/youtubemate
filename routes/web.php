@@ -17,5 +17,9 @@ Route::get('/', function () {
 
 Route::get('/videos/test', 'Videos@test')->name('Videos');
 
-Route::post('/videos/displayVideosInfo', 'Videos@displayVideosInfo')->name('Videos');
 
+Route::get('/videos/downloadGateway', 'Videos@downloadGateway')->name('Videos');
+
+
+Route::post('/videos/displayVideosInfo', 'Videos@displayVideosInfo')->name('Videos');
+Route::post('/videos/downloadSingleVideoByFormat', 'Videos@downloadSingleVideoByFormat')->name('Videos');
