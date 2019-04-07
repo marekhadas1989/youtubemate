@@ -2,25 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="_token" content="{{csrf_token()}}" />
-    <title>YouTube Mate - download any video or playlist from YouTube</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/landing-page.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/alertify.min.css">
+    @include('header')
 </head>
 
 <body>
@@ -28,9 +10,14 @@
 
 <style>
 
+    .ytbPlaylist img,h6,input{
+        cursor:pointer !important;
+    }
+
     .bd-callout-info{
         border-left-color: #5bc0de !Important;
     }
+
     .bd-callout {
         padding: 1.25rem;
         margin-top: 1.25rem;
@@ -39,7 +26,20 @@
         border-left-width: .25rem;
         border-radius: .25rem;
     }
-    .parent {
+
+    .parent{
+        position:fixed;
+        width:100%;
+        height:100%;
+        background:white;
+        top:0px;
+        left:0px;
+        z-index:1000;
+        opacity:0.8;
+        text-align:center
+    }
+
+    .center_flexible_box {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -64,6 +64,23 @@
         opacity:0.4;
     }
 
+    .playlistFormatSelection{
+        display:flex;
+        position:fixed;
+        width:75%;
+        height:100%;
+        background:white;
+        top:0px;
+        left:25%;
+        z-index:1000;
+        opacity:0.9;
+        text-align:center;
+        border:dashed 4px #007bff;
+        border-top:none;
+        border-bottom:none;
+        border-right:none
+    }
+
 </style>
 
 <div class="modal" tabindex="-1" role="dialog" id="aboutModal">
@@ -79,7 +96,7 @@
                 <p>This project has been made solely for the testing purposes and it will not be developed in future so please use it carefully.</p>
                 <p>Any issues found will not be addressed in future.</p>
                 <p>This project is intended for private purposes only.</p>
-                <p>And damages caused by using it are totally under your responsibility, what's more you should use it only accordingly to the applicable law in your country.</p>
+                <p>And damages caused by using it are totally under your responsibility, moreover you should use it only accordingly to the applicable law in your country.</p>
                 <p>Any data processed in here will be ephemeral for the purpose of the demo. Data will neither be persisted nor stored for further usage anywhere.</p>
             </div>
             <div class="modal-footer">
@@ -127,8 +144,8 @@
     </div>
 </div>
 
-<div class="parent" style="display:none;position:fixed;width:100%;height:100%;background:white;top:0px;left:0px;z-index:1000;opacity:0.8;text-align:center">
-    <div>
+<div class="parent center_flexible_box" style="display:none">
+    <div >
         <img  src="/img/spinner.gif">
         <h4 style="color:#CE1617;margin-top:20px">
             Grab yourself a cup of tea, your request is being processed.
@@ -136,6 +153,89 @@
         <h6 style="color:#CE1617;margin-top:5px">
             Stay calm, depends on the amount of videos you are processing it can take a really long while.
         </h6>
+    </div>
+</div>
+
+<div class="center_flexible_box playlistFormatSelection">
+    <div>
+        <div class="" youtube="https://www.youtube.com/watch?v=PVxCwgO98Ek&amp;list=RDPVxCwgO98Ek&amp;index=1"><label><p><img class="img-fluid" src="https://i.ytimg.com/vi/PVxCwgO98Ek/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&amp;rs=AOn4CLBRwNw1zhaHB2vzs2wCHxgEsM4chw"></p><h6>Imad - Nightcry (Official Lyric Video)</h6></label></div>
+
+        <h4 style="color:#CE1617;margin-top:20px">
+            Select video format or use default settings.
+        </h4>
+        <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
+
+            <div class="custom-control custom-radio custom-control-inline">
+
+                <input type="radio" checked="checked" name="playlist_format_method[]" class="custom-control-input" value="1" id="customRadioInline1">
+                <label class="custom-control-label" for="customRadioInline1">Download default stream</label>
+
+            </div>
+
+            <div class="custom-control custom-radio custom-control-inline">
+
+                <input type="radio" name="playlist_format_method[]" class="custom-control-input" value="2" id="customRadioInline2">
+                <label class="custom-control-label" for="customRadioInline2">Choose by yourself</label>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <h5>Audio Only</h5>
+                <table class="table table-hover DataTable">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Bitrate</th>
+                        <th scope="col">Extension</th>
+                        <th scope="col">Codec</th>
+                        <th scope="col">Select</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="singleAudioFormatsPlaylist">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <h5>Video Only</h5>
+                <table class="table table-hover DataTable">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Resolution</th>
+                        <th scope="col">Bitrate</th>
+                        <th scope="col">Extension</th>
+                        <th scope="col">Select</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="singleVideoFormatsPlaylist">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <button type="button" class="btn btn-primary closeSelection">
+                    Close Selection
+                </button>
+                <button type="button" class="btn btn-success saveSelection">
+                    Save Selection
+                </button>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -159,7 +259,7 @@
                 <form>
                     <div class="form-row">
                         <div class="col-12 col-md-9 mb-2 mb-md-0 urlLink">
-                            <input type="text" autocomplete="off" class="form-control form-control-lg" placeholder="Paste link here">
+                            <input value="https://www.youtube.com/watch?v=LM0ee-BA9Z0&list=RDGMEMYH9CUrFO7CfLJpaD7UR85wVMPVxCwgO98Ek&index=5" type="text" autocomplete="off" class="form-control form-control-lg" placeholder="Paste link here">
                         </div>
                         <div class="col-12 col-md-3">
                             <button type="button" class="btn btn-block btn-lg btn-primary downloadVideo">Download!</button>
@@ -171,8 +271,7 @@
     </div>
 </header>
 
-<!-- Icons Grid -->
-<section class="features-icons text-center boxVideos" style="display:none">
+<section class="features-icons text-center">
 
     <div class="container">
 
@@ -206,6 +305,17 @@
             </div>
         </div>
     </div>
+</section>
+
+<!--
+############################################
+########### SINGLE VIDEO DOWNLOAD BOX#######
+############################################
+-->
+
+<!-- Icons Grid -->
+<section class="features-icons text-center boxVideos" style="display:none">
+
 
     <div class="container singleVideo" style="margin-top:20px;border:dotted 2px orange;padding:20px">
         <div class="row">
@@ -218,53 +328,23 @@
 
                 </div>
 
-
                 <div class="row" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
 
-                    <div class="col-md-12 bd-callout bd-callout-info">
-                        <h5>Following options are available:</h5>
-                        <ul class="text-left">
-                            <li>You can download <b>audio stream only</b> by selecting one option from the table located on the left hand side of the screen<code class="highlighter-rouge">(fastest method)</code></li>
-                            <li><b>Video stream only</b> by selecting one option from the table located underneath on the right hand side of the screen<code class="highlighter-rouge">(fastest method)</code></li>
-                            <li>You can select either audio as well as video stream. Both streams will be combined into one file and ready for download thereafter<code class="highlighter-rouge">(slowest method)</code></li>
-                            <li>You can use <b>download default stream</b> option (Single video will be prepared having both video &amp; audio stream combined all together, medium quality)<code class="highlighter-rouge">(medium speed)</code></li>
-                        </ul>
-                        <h5>Caveats:</h5>
-                        <h6 class="text-left">*Selection of both audio &amp; video stream simulataniously can be only done across the same types of used compression or it's derivatives eg. webm to webm, mp4 to m4a.</h6>
-                        <h6 class="text-left">*Undo your selection by clicking again into highlighted row, this will revert back visibility of all available formats.</h6>
-                    </div>
-
-                    <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
-
-                        <div class="custom-control custom-radio custom-control-inline">
-
-                            <input type="radio" checked="checked" name="format_method" class="custom-control-input" value="1" id="customRadioInline1">
-                            <label class="custom-control-label" for="customRadioInline1">Download default stream</label>
-
-                        </div>
-
-                        <div class="custom-control custom-radio custom-control-inline">
-
-                            <input type="radio" name="format_method" class="custom-control-input" value="2" id="customRadioInline2">
-                            <label class="custom-control-label" for="customRadioInline2">Choose by yourself</label>
-
-                        </div>
-
-                    </div>
+                    @include('caveats')
 
                     <div class="col-sm-12 col-md-6 col-lg-6 audioTable formatsBox disabledBox">
                         <h5>Audio Only</h5>
                         <table class="table table-hover DataTable">
 
                             <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Size</th>
-                                    <th scope="col">Bitrate</th>
-                                    <th scope="col">Extension</th>
-                                    <th scope="col">Codec</th>
-                                    <th scope="col">Select</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Bitrate</th>
+                                <th scope="col">Extension</th>
+                                <th scope="col">Codec</th>
+                                <th scope="col">Select</th>
+                            </tr>
                             </thead>
 
                             <tbody class="singleAudioFormats"></tbody>
@@ -293,7 +373,6 @@
                     <div class="col-md-12">
                         <button type="button" class="btn btn-success btn-lg downloadSingle">Download</button>
                     </div>
-
                 </div>
 
             </div>
@@ -302,6 +381,38 @@
 
 </section>
 
+
+<!--
+############################################
+######## PLAYLIST VIDEO DOWNLOAD BOX########
+############################################
+-->
+
+<!-- Icons Grid -->
+<section class="features-icons text-center">
+
+    <div class="container singleVideo" style="margin-top:20px;border:dotted 2px orange;padding:20px">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <i class="fas fa-check-square"></i> Select All
+                <i class="fas fa-check-square"></i> Select None
+                <div class="row playlistBox" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
+
+                </div>
+
+                <div class="row" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
+
+                    @include('caveats')
+
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-success btn-lg downloadSingle">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
 
 <!-- Testimonials -->
 <section class="testimonials text-center bg-light">
@@ -396,22 +507,7 @@
     </div>
 </footer>
 
-<!-- Bootstrap core JavaScript -->
-<script src="/js/jquery.js"></script>
-<script src="/js/bootstrap.js"></script>
-<script src="/js/alertify.min.js"></script>
-<script src="/js/datatables.min.js"></script>
-<script src="/js/mate.js?v=<?php echo time(); ?>"></script>
-<script type="text/javascript">
-    $(function(){
-        mate.init();
-        $.ajaxSetup({
-            headers : {
-            'X-CSRF-TOKEN' : $('meta[name="_token"]').attr('content')
-            }
-        });
-    })
-</script>
+@include('footer')
 </body>
 
 </html>

@@ -204,7 +204,6 @@ class Videos extends Controller
 
         }
 
-
         echo json_encode($response);
     }
 

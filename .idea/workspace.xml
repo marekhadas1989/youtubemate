@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dd5d58b-035c-4901-b937-22be955dd0db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/caveats.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/footer.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Videos.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Videos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/landing-page.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/landing-page.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/mate.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/mate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,21 +25,55 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="89" column="6" lean-forward="true" selection-start-line="89" selection-start-column="6" selection-end-line="89" selection-end-column="6" />
+            <state relative-caret-position="579">
+              <caret line="405" lean-forward="true" selection-start-line="405" selection-end-line="405" />
               <folding>
-                <element signature="e#2114#2121#1#HTML" expanded="true" />
-                <element signature="e#3515#3522#1#HTML" expanded="true" />
-                <element signature="e#4920#4927#1#HTML" expanded="true" />
-                <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h6#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#6185#6190#0#HTML" expanded="true" />
-                <element signature="e#6520#6525#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#1179#1186#1#HTML" expanded="true" />
+                <element signature="e#2504#2511#1#HTML" expanded="true" />
+                <element signature="e#3273#3280#1#HTML" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h4#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h6#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h4#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#section#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/header.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/caveats.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="100" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="100" />
+              <folding>
+                <element signature="e#1049#1054#0#HTML" expanded="true" />
+                <element signature="e#1308#1313#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/css/landing-page.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -44,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/mate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="102" column="16" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="16" />
+            <state relative-caret-position="715">
+              <caret line="378" column="4" selection-start-line="378" selection-start-column="4" selection-end-line="378" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -53,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Videos.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="310" column="31" selection-start-line="310" selection-start-column="31" selection-end-line="310" selection-end-column="31" />
+            <state relative-caret-position="527">
+              <caret line="89" column="26" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -62,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="35" />
+            <state relative-caret-position="238">
+              <caret line="23" column="66" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -79,23 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>input</find>
-      <find>name=&quot;audio&quot;</find>
-      <find>$available</find>
-      <find>list($seek_start, $seek_end)</find>
-      <find>downloadGateway</find>
-      <find>Video &amp; Audio</find>
-      <find>ajax</find>
-      <find>downloadStream</find>
-      <find>col-sm-12 col-md-6 col-lg-6</find>
-      <find>Please</find>
-      <find>Audio Only</find>
-      <find>displayVideosInfo</find>
-      <find>disabledBox</find>
-      <find>selectOptionBox</find>
-      <find>Both streams</find>
-      <find>downloadSingleVideoByFormat</find>
-      <find>format_method</find>
       <find>downloadSingle</find>
       <find>thereafter</find>
       <find>medium quality</find>
@@ -105,10 +125,27 @@
       <find>playlist_id</find>
       <find>displaySingleVideoInfo</find>
       <find>download default</find>
-      <find>is_default</find>
       <find>You ca</find>
       <find>download default</find>
       <find>About</find>
+      <find>is_default</find>
+      <find>displayVideosInfo</find>
+      <find>deleted</find>
+      <find>what</find>
+      <find>Select Format</find>
+      <find>features-icons</find>
+      <find>Following options are available:</find>
+      <find>ytbPlaylist</find>
+      <find>Download</find>
+      <find>Select video</find>
+      <find>position:fixed;width:75%;height:100%;background:white;top:0px;left:25%;z-index:1000;opacity:0.9;text-align:center</find>
+      <find>playlistFormatSelection</find>
+      <find>center_flexible_box</find>
+      <find>parent</find>
+      <find>sa</find>
+      <find>displayPlaylistInfo</find>
+      <find>saveSelection</find>
+      <find>label</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\wildsnaske\Documents\GitHub\youtubemate</dir>
@@ -125,8 +162,12 @@
       <list>
         <option value="$PROJECT_DIR$/resources/js/mate.js" />
         <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/public/js/mate.js" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Videos.php" />
+        <option value="$PROJECT_DIR$/public/css/landing-page.css" />
+        <option value="$PROJECT_DIR$/resources/views/footer.php" />
+        <option value="$PROJECT_DIR$/resources/views/caveats.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/mate.js" />
+        <option value="$PROJECT_DIR$/resources/views/header.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
       </list>
     </option>
@@ -213,10 +254,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-3368" />
-    <option name="y" value="28" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="x" value="-1019" />
+    <option name="y" value="98" />
+    <option name="width" value="550" />
+    <option name="height" value="325" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -391,18 +432,18 @@
       <option name="presentableId" value="Default" />
       <updated>1553950446778</updated>
       <workItem from="1553950449614" duration="4251000" />
-      <workItem from="1554156073374" duration="77281000" />
+      <workItem from="1554156073374" duration="88739000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81532000" />
+    <option name="totallyTimeSpent" value="92990000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3368" y="28" width="1696" height="1026" extended-state="6" />
+    <frame x="-1688" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16564792" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16564792" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Command Line Tools Console" sideWeight="0.49932885" weight="0.25979844" />
@@ -423,6 +464,28 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16564792" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="0" sideWeight="0.49932885" weight="0.25979844" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32922733" />
+      <window_info anchor="bottom" id="Run" order="3" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50067115" side_tool="true" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -499,43 +562,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Videos.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="35" />
+        <state relative-caret-position="527">
+          <caret line="89" column="26" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Videos.php">
+    <entry file="file://$PROJECT_DIR$/public/css/landing-page.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="310" column="31" selection-start-line="310" selection-start-column="31" selection-end-line="310" selection-end-column="31" />
+        <state relative-caret-position="289">
+          <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/footer.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/caveats.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="100" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="100" />
+          <folding>
+            <element signature="e#1049#1054#0#HTML" expanded="true" />
+            <element signature="e#1308#1313#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="23" column="66" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="66" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/mate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="102" column="16" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="16" />
+        <state relative-caret-position="715">
+          <caret line="378" column="4" selection-start-line="378" selection-start-column="4" selection-end-line="378" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/header.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="89" column="6" lean-forward="true" selection-start-line="89" selection-start-column="6" selection-end-line="89" selection-end-column="6" />
+        <state relative-caret-position="579">
+          <caret line="405" lean-forward="true" selection-start-line="405" selection-end-line="405" />
           <folding>
-            <element signature="e#2114#2121#1#HTML" expanded="true" />
-            <element signature="e#3515#3522#1#HTML" expanded="true" />
-            <element signature="e#4920#4927#1#HTML" expanded="true" />
-            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h6#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#6185#6190#0#HTML" expanded="true" />
-            <element signature="e#6520#6525#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#1179#1186#1#HTML" expanded="true" />
+            <element signature="e#2504#2511#1#HTML" expanded="true" />
+            <element signature="e#3273#3280#1#HTML" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#section#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#section#2;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
