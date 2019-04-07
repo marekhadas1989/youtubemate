@@ -10,7 +10,15 @@
 
 <style>
 
-    .ytbPlaylist img,h6,input{
+    .custom-control input,
+    .custom-control label,
+    .singleAudioFormatsPlaylist tr,
+    .singleVideoFormatsPlaylist tr,
+    .selectAllVideos,
+    .selectAllVideos code,
+    .undoAllVideos,
+    .undoAllVideos code,
+    .ytbPlaylistItem p img,h6,input{
         cursor:pointer !important;
     }
 
@@ -67,18 +75,15 @@
     .playlistFormatSelection{
         display:flex;
         position:fixed;
-        width:75%;
+        width:100%;
         height:100%;
         background:white;
         top:0px;
-        left:25%;
+        left:0%;
         z-index:1000;
-        opacity:0.9;
+        opacity:0.95;
         text-align:center;
         border:dashed 4px #007bff;
-        border-top:none;
-        border-bottom:none;
-        border-right:none
     }
 
 </style>
@@ -156,87 +161,95 @@
     </div>
 </div>
 
-<div class="center_flexible_box playlistFormatSelection">
-    <div>
-        <div class="" youtube="https://www.youtube.com/watch?v=PVxCwgO98Ek&amp;list=RDPVxCwgO98Ek&amp;index=1"><label><p><img class="img-fluid" src="https://i.ytimg.com/vi/PVxCwgO98Ek/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&amp;rs=AOn4CLBRwNw1zhaHB2vzs2wCHxgEsM4chw"></p><h6>Imad - Nightcry (Official Lyric Video)</h6></label></div>
-
-        <h4 style="color:#CE1617;margin-top:20px">
-            Select video format or use default settings.
-        </h4>
-        <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
-
-            <div class="custom-control custom-radio custom-control-inline">
-
-                <input type="radio" checked="checked" name="playlist_format_method[]" class="custom-control-input" value="1" id="customRadioInline1">
-                <label class="custom-control-label" for="customRadioInline1">Download default stream</label>
-
-            </div>
-
-            <div class="custom-control custom-radio custom-control-inline">
-
-                <input type="radio" name="playlist_format_method[]" class="custom-control-input" value="2" id="customRadioInline2">
-                <label class="custom-control-label" for="customRadioInline2">Choose by yourself</label>
-
-            </div>
-
-        </div>
+<div class="center_flexible_box playlistFormatSelection" style="display:none">
 
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <h5>Audio Only</h5>
-                <table class="table table-hover DataTable">
 
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Bitrate</th>
-                        <th scope="col">Extension</th>
-                        <th scope="col">Codec</th>
-                        <th scope="col">Select</th>
-                    </tr>
-                    </thead>
+            <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
+                <div class="playlistItemPreviewData">
+                    <img class="img-fluid" src="#"></p>
+                    <h6></h6>
+                </div>
 
-                    <tbody class="singleAudioFormatsPlaylist">
+                <h4 style="color:#CE1617;margin-top:20px">
+                    Select video format or use default settings.
+                </h4>
 
-                    </tbody>
-                </table>
+                <div class="custom-control custom-radio custom-control-inline">
+
+                    <input type="radio" checked="checked" name="playlist_format_method[]" class="playlistItemBox custom-control-input" value="1" id="customRadioInline1">
+                    <label class="custom-control-label" for="customRadioInline1">Download default stream</label>
+
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+
+                    <input type="radio" name="playlist_format_method[]" class="playlistItemBox custom-control-input" value="2" id="customRadioInline2">
+                    <label class="custom-control-label" for="customRadioInline2">Choose by yourself</label>
+
+                </div>
+
             </div>
 
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <h5>Video Only</h5>
-                <table class="table table-hover DataTable">
+            <div class="row" style="width:95%;margin-left:2%;max-height:400px;overflow-y:scroll;">
 
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Resolution</th>
-                        <th scope="col">Bitrate</th>
-                        <th scope="col">Extension</th>
-                        <th scope="col">Select</th>
-                    </tr>
-                    </thead>
+                <div class="col-lg-6 playlistTable disabledBox">
+                    <h5>Audio Only</h5>
+                    <table class="table DataTable">
 
-                    <tbody class="singleVideoFormatsPlaylist">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Bitrate</th>
+                            <th scope="col">Extension</th>
+                            <th scope="col">Codec</th>
+                            <th scope="col">Select</th>
+                        </tr>
+                        </thead>
 
-                    </tbody>
-                </table>
+                        <tbody class="singleAudioFormatsPlaylist">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-lg-6 playlistTable disabledBox">
+                    <h5>Video Only</h5>
+                    <table class="table DataTable">
+
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Resolution</th>
+                            <th scope="col">Bitrate</th>
+                            <th scope="col">Extension</th>
+                            <th scope="col">Select</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="singleVideoFormatsPlaylist">
+
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top:20px">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <button type="button" class="btn btn-primary closeSelection">
+                <button type="button" class="btn btn-danger closeSelection">
                     Close Selection
                 </button>
-                <button type="button" class="btn btn-success saveSelection">
+                <button type="button" disabled="disabled" class="btn btn-success saveSelection">
                     Save Selection
                 </button>
             </div>
         </div>
 
-    </div>
+
 </div>
 
 <!-- Navigation -->
@@ -369,7 +382,6 @@
                             <tbody class="singleVideoFormats"></tbody>
                         </table>
                     </div>
-
                     <div class="col-md-12">
                         <button type="button" class="btn btn-success btn-lg downloadSingle">Download</button>
                     </div>
@@ -394,19 +406,25 @@
     <div class="container singleVideo" style="margin-top:20px;border:dotted 2px orange;padding:20px">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-                <i class="fas fa-check-square"></i> Select All
-                <i class="fas fa-check-square"></i> Select None
+
+                <span class="selectAllVideos">
+                    <i class="fas fa-check-square"></i>
+                    Download using default method
+                    <code class="highlighter-rouge">(Medium quality videos)</code>
+                </span>
+
+                <span class="undoAllVideos">
+                    <i class="far fa-square"></i>
+                    Select manually
+                    <code class="highlighter-rouge">(Select videos and quality manually, <b>slowest option)</b></code>
+                </span>
+
                 <div class="row playlistBox" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
 
                 </div>
 
-                <div class="row" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
-
-                    @include('caveats')
-
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-success btn-lg downloadSingle">Download</button>
-                    </div>
+                <div class="col-md-12" style="margin-top:20px">
+                    <button type="button" class="btn btn-success btn-lg downloadSelectedVideos">Download Selected Videos</button>
                 </div>
             </div>
         </div>
