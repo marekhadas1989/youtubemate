@@ -23,10 +23,9 @@ var mate = (function(){
             (function(e){
                 if(e.length) throw new Object({'SELF CHECK FAILED':{duplicated_ids:e}});
             }(
-                [].map.call(document.querySelectorAll("[id]"),
-                    function (e) {
+                [].map.call(document.querySelectorAll("[id]"),function (e) {
                         return e.id;
-                    }).filter(function(e,i,a) {
+                }).filter(function(e,i,a) {
                     return ((a.lastIndexOf(e) !== i))
                 })
             ))
@@ -49,13 +48,15 @@ var mate = (function(){
                 'data'      :   arguments[4],
                 'beforeSend': function() {
                     $('.parent').show();
+                    $('.playlistMainContainer,.singleVideoMainContainer').hide();
                 }
             }).fail(function( jqXHR, textStatus ) {
                 alert( "Request failed: ");
-                $('.parent').hide();
+                $('.parent,.iconsThree').hide();
             }).done(function( data ) {
-                $('.parent').hide();
-                $(window).scrollTop($('.boxVideos').position().top+$('.boxVideos .container').eq(0).height());
+                $('.parent,.iconsThree').hide();
+                $('.iconsThree').show();
+                $(window).scrollTop($('.singleVideoMainContainer').position().top+$('.singleVideoMainContainer .container').eq(0).height());
             });
 
         },
@@ -111,6 +112,8 @@ var mate = (function(){
 
                 _this.setTooltips(false,'<b>Default Audio & Video</b> stream selected');
             }
+
+            $('.playlistMainContainer').show();
 
         },
         setTooltips:function(element,text){
@@ -194,7 +197,7 @@ var mate = (function(){
                 });
             }
 
-            $('.boxVideos').fadeIn();
+            $('.singleVideoMainContainer').fadeIn();
         },
         getVideoData:function(params){
 
@@ -499,13 +502,13 @@ var mate = (function(){
 
             })
 
-            $('.boxVideos').on('click','tr',function(e){
+            $('.singleVideoMainContainer').on('click','tr',function(e){
 
                 var extension       = $(this).attr('extension'),
                     audio_or_video  = $(this).parent().attr('class');
 
                 //if box is disabled prevent any further actions
-                if($('.disabledBox').length > 0){
+                if($('.singleVideoMainContainer').find('.disabledBox').length > 0){
                     return false;
                 }
 

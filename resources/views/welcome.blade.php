@@ -197,92 +197,92 @@
 
 <div class="center_flexible_box playlistFormatSelection" style="display:none">
 
-        <div class="row">
+    <div class="row">
 
-            <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
-                <div class="playlistItemPreviewData">
-                    <img class="img-fluid" src="#"></p>
-                    <h6></h6>
-                </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 " style="margin:20px 0px 20px 0px">
 
-                <h4 style="color:#CE1617;margin-top:20px">
-                    Select video format or use default settings.
-                </h4>
+            <div class="playlistItemPreviewData">
+                <img class="img-fluid" src="#"></p>
+                <h6></h6>
+            </div>
 
-                <div class="custom-control custom-radio custom-control-inline">
+            <h4 style="color:#CE1617;margin-top:20px">
+                Select video format or use default settings.
+            </h4>
 
-                    <input type="radio" checked="checked" name="playlist_format_method[]" class="playlistItemBox custom-control-input" value="1" id="playlistItemBox1">
-                    <label class="custom-control-label" for="playlistItemBox1">Download default stream</label>
+            <div class="custom-control custom-radio custom-control-inline">
 
-                </div>
-
-                <div class="custom-control custom-radio custom-control-inline">
-
-                    <input type="radio" name="playlist_format_method[]" class="playlistItemBox custom-control-input" value="2" id="playlistItemBox2">
-                    <label class="custom-control-label" for="playlistItemBox2">Choose by yourself</label>
-
-                </div>
+                <input type="radio" checked="checked" name="playlist_format_method[]" class="playlistItemBox custom-control-input" value="1" id="playlistItemBox1">
+                <label class="custom-control-label" for="playlistItemBox1">Download default stream</label>
 
             </div>
 
-            <div class="row" style="width:95%;margin-left:2%;max-height:400px;overflow-y:scroll;">
+            <div class="custom-control custom-radio custom-control-inline">
 
-                <div class="col-lg-6 playlistTable disabledBox">
-                    <h5>Audio Only</h5>
-                    <table class="table DataTable">
-
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Size</th>
-                            <th scope="col">Bitrate</th>
-                            <th scope="col">Extension</th>
-                            <th scope="col">Codec</th>
-                            <th scope="col">Select</th>
-                        </tr>
-                        </thead>
-
-                        <tbody class="singleAudioFormatsPlaylist">
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="col-lg-6 playlistTable disabledBox">
-                    <h5>Video Only</h5>
-                    <table class="table DataTable">
-
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Size</th>
-                            <th scope="col">Resolution</th>
-                            <th scope="col">Bitrate</th>
-                            <th scope="col">Extension</th>
-                            <th scope="col">Select</th>
-                        </tr>
-                        </thead>
-
-                        <tbody class="singleVideoFormatsPlaylist">
-
-                        </tbody>
-                    </table>
-                </div>
+                <input type="radio" name="playlist_format_method[]" class="playlistItemBox custom-control-input" value="2" id="playlistItemBox2">
+                <label class="custom-control-label" for="playlistItemBox2">Choose by yourself</label>
 
             </div>
+
         </div>
 
-        <div class="row" style="margin-top:20px">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <button type="button" class="btn btn-danger closeSelection">
-                    Close Selection
-                </button>
-                <button type="button"  class="btn btn-success saveSelection">
-                    Save Selection
-                </button>
-            </div>
-        </div>
+        <div class="row" style="width:95%;margin-left:2%;max-height:400px;overflow-y:scroll;">
 
+            <div class="col-lg-6 playlistTable disabledBox">
+                <h5>Audio Only</h5>
+                <table class="table DataTable">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Bitrate</th>
+                        <th scope="col">Extension</th>
+                        <th scope="col">Codec</th>
+                        <th scope="col">Select</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="singleAudioFormatsPlaylist">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-lg-6 playlistTable disabledBox">
+                <h5>Video Only</h5>
+                <table class="table DataTable">
+
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Resolution</th>
+                        <th scope="col">Bitrate</th>
+                        <th scope="col">Extension</th>
+                        <th scope="col">Select</th>
+                    </tr>
+                    </thead>
+
+                    <tbody class="singleVideoFormatsPlaylist">
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <button type="button" class="btn btn-danger closeSelection">
+                Close Selection
+            </button>
+            <button type="button"  class="btn btn-success saveSelection">
+                Save Selection
+            </button>
+        </div>
+    </div>
 
 </div>
 
@@ -318,7 +318,8 @@
     </div>
 </header>
 
-<section class="features-icons text-center">
+
+<section class="features-icons text-center iconsThree" style="display:none">
 
     <div class="container">
 
@@ -353,7 +354,6 @@
         </div>
     </div>
 </section>
-
 <!--
 ############################################
 ########### SINGLE VIDEO DOWNLOAD BOX#######
@@ -361,8 +361,7 @@
 -->
 
 <!-- Icons Grid -->
-<section class="features-icons text-center boxVideos" style="display:none">
-
+<section class="text-center singleVideoMainContainer" style="display:none">
 
     <div class="container singleVideo" style="margin-top:20px;border:dotted 2px orange;padding:20px">
         <div class="row">
@@ -435,9 +434,9 @@
 -->
 
 <!-- Icons Grid -->
-<section class="features-icons text-center">
+<section class="features-icons text-center playlistMainContainer" style="display:none">
 
-    <div class="container singleVideo" style="margin-top:20px;border:dotted 2px orange;padding:20px">
+    <div class="container" style="margin-top:20px;border:dotted 2px orange;padding:20px">
 
         <div class="row">
 
