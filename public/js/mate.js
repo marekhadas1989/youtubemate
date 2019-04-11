@@ -33,8 +33,8 @@ var mate = (function(){
         },
         playlist_mode:{
             default :   1,
-            video   :   2,
-            audio   :   3,
+            audio   :   2,
+            video   :   3,
             manual  :   4
         },
         playlist:{},
@@ -100,8 +100,9 @@ var mate = (function(){
                     playlistHTML+=
                         '<div class="col-xs-2 col-sm-3 col-md-2 col-lg-2 ytbPlaylistItem" method="default" youtube_id="'+videos_available[a].video_id+'">'+
                             '<p><input type="checkbox" checked="checked"><p>'+
-                            '<div class="showFormatSelectionBox" data-toggle="tooltip" data-html="true" data-placement="top" title="<em>Click into the image</em> <u>to select</u> <b>resolution manually</b>" youtube_id="'+videos_available[a].video_id+'">'+
-                                '<img class="img-fluid" src="'+videos_available[a].thumbnail+'">'+
+                            '<div data-toggle="tooltip" data-html="true" data-placement="top" title="In order to select format more specifically switch to <b>Manual Mode</b>" youtube_id="'+videos_available[a].video_id+'">'+
+                                '<img class="youtube_url_lightbox img-fluid " youtube_id="'+videos_available[a].video_id+'" src="'+videos_available[a].thumbnail+'">'+
+                                '<h5 class="showFormatSelectionBox cogSelect" ><i class="fas fa-cog"></i></h5>'+
                                 '<h6>'+videos_available[a].title+'</h6>'+
                             '</div>'+
                         '</div>';
@@ -110,7 +111,7 @@ var mate = (function(){
 
                 $('.playlistBox').append(playlistHTML);
 
-                _this.setTooltips(false,'<b>Default Audio & Video</b> stream selected');
+                _this.setTooltips('.ytbPlaylistItem div','<b>Default Audio & Video</b> stream selected');
             }
 
             $('.playlistMainContainer').show();
@@ -118,7 +119,7 @@ var mate = (function(){
         },
         setTooltips:function(element,text){
 
-            var default_message = text      ||  '<em>Click into the image</em> <u>to select</u> <b>resolution manually</b>',
+            var default_message = text      ||  'In order to select format more specifically switch to <b>Manual Mode</b>',
                 default_class   = element   ||  '.showFormatSelectionBox';
 
             var selection = {
@@ -126,7 +127,11 @@ var mate = (function(){
                 'title'              :  default_message
             };
 
-            $(default_class).attr(selection);
+            if(!(element instanceof Object)){
+                $(default_class).attr(selection);
+            }else{
+                element.attr(selection);
+            }
 
             $('[data-toggle="tooltip"]').tooltip('update');
 
@@ -174,6 +179,7 @@ var mate = (function(){
         },
         displaySingleVideoInfo:function(data,url){
 
+            $('.singleVideoThumbnail').addClass('youtube_url_lightbox').attr('youtube_id',data.available[0].video_id);
             $('.singleVideoThumbnail').attr('src',data.available[0].thumbnail);
             $('.singleVideoTitle').text(data.available[0].title);
 
@@ -262,8 +268,8 @@ var mate = (function(){
         mapExtensions:function(ext,source_box){
 
             var _class = {
-                'singleAudioFormatsPlaylist':'',
-                'singleVideoFormatsPlaylist':'',
+                'singleAudioFormatsPlaylist':'playlistVideoTable',
+                'singleVideoFormatsPlaylist':'playlistAudioTable',
                 'singleAudioFormats':'videoTable',
                 'singleVideoFormats':'audioTable'
             }
@@ -279,24 +285,20 @@ var mate = (function(){
                 ]
             }
 
-            if(ext in m){
+            var _class = '.'+(_class[source_box])+' tbody tr';
 
-                var _class = '.'+(_class[source_box])+' tbody tr';
+            $(_class).each(function(){
 
-                $(_class).each(function(){
+                var element_extension = $(this).attr('extension');
 
-                    var element_extension = $(this).attr('extension');
+                if(ext in m && m[ext].indexOf(element_extension) == -1){
+                    $(this).hide();
+                }else{
+                    $(this).show();
+                }
 
-                    if(m[ext].indexOf(element_extension) == -1){
-                        $(this).hide();
-                    }else{
-                        $(this).show();
-                    }
+            })
 
-                })
-
-            }
-            //do not map, one size fits all
 
         },
         setPlaylistFormatSelection(youtube_id){
@@ -305,6 +307,7 @@ var mate = (function(){
 
             $('.playlistItemPreviewData h6').text(item.title);
             $('.playlistItemPreviewData img').attr('src',item.thumbnail);
+            $('.playlistItemPreviewData img').attr('youtube_id',youtube_id).addClass('youtube_url_lightbox');
 
             var video_formats = item.formats.video,
                 audio_formats = item.formats.audio;
@@ -326,23 +329,22 @@ var mate = (function(){
             $('.formatsBox').find('input').removeAttr('checked');
 
         },
-        revertSingleFormatSelection:function(revertAll){
+        revertSingleFormatSelectionPlaylist:function(revertAll){
 
             var attributes = ['video_codec_id','audio_codec_id','video_desc','audio_desc'];
-
 
             var youtube_id  = $('.playlistFormatSelection').attr('youtube_id'),
                 selector    = '.ytbPlaylistItem[youtube_id="'+youtube_id+'"]';
 
                 $('.playlistFormatSelection').find('.playlistTable').addClass('disabledBox');
 
-                $('.singleAudioFormatsPlaylist').find('tr').removeClass('selectedAudio');
-                $('.singleVideoFormatsPlaylist').find('tr').removeClass('selectedVideo');
+                $('.singleAudioFormatsPlaylist,.singleVideoFormatsPlaylist').find('tr').removeClass('selectedAudio selectedVideo');
+
 
                 $('.disabledBox').find('input').removeAttr('checked').prop('checked',false);
 
-                $('#customRadioInline1').attr('checked','checked').prop('checked',true);
-                $('#customRadioInline2').removeAttr('checked').prop('checked',false);
+                $('#playlistItemBox1').attr('checked','checked').prop('checked',true);
+                $('#playlistItemBox2').removeAttr('checked').prop('checked',false);
 
             if(typeof revertAll != 'undefined' && revertAll == true){
                 selector = '.ytbPlaylistItem';
@@ -362,9 +364,11 @@ var mate = (function(){
                 audio_id = element.attr('audio_codec_id') || false;
 
             if(video_id || audio_id){
+
                 $('.playlistItemBox').removeAttr('checked').prop('checked',false);
                 $('.playlistItemBox').eq(1).attr('checked','checked').prop('checked',true);
                 $('.playlistTable').removeClass('disabledBox');
+
             }
 
             if(video_id){
@@ -372,7 +376,7 @@ var mate = (function(){
                 var target = $('.singleVideoFormatsPlaylist').find('input[value="'+video_id+'"]');
                     target.attr('checked','checked').prop('checked',true);
 
-                target.parentsUntil('tr').parent().addClass('selectedVideo');
+                    target.parentsUntil('tr').parent().addClass('selectedVideo');
 
             }
 
@@ -381,7 +385,7 @@ var mate = (function(){
                 var target = $('.singleAudioFormatsPlaylist').find('input[value="'+audio_id+'"]');
                     target.attr('checked','checked').prop('checked',true);
 
-                target.parentsUntil('tr').parent().addClass('selectedAudio');
+                    target.parentsUntil('tr').parent().addClass('selectedAudio');
 
             }
 
@@ -392,36 +396,79 @@ var mate = (function(){
 
             var newMethod = parseInt($(this).val());
 
+            $('.showFormatSelectionBox').hide();
+
+            //revert selection on formats
+            $('.cogSelected').removeClass('cogSelected').addClass('cogSelect');
+
             //strict types
             switch(newMethod){
 
                 case _parentObj.playlist_mode.default:
-                    _parentObj.setTooltips(false,'<b>Default Audio & Video</b> <br/>stream selected');
+
+                    _parentObj.setTooltips('.ytbPlaylistItem div','<b>Default Audio & Video</b> <br/>stream selected');
                 break;
 
                 case _parentObj.playlist_mode.audio:
-                    _parentObj.setTooltips(false,'<b>Audio Only</b> <br/>stream selected');
+                    _parentObj.setTooltips('.ytbPlaylistItem div','<b>Audio Only</b> <br/>stream selected');
                 break;
 
                 case _parentObj.playlist_mode.video:
-                    _parentObj.setTooltips(false,'<b>Video Only</b> <br/>stream selected');
+                    _parentObj.setTooltips('.ytbPlaylistItem div','<b>Video Only</b> <br/>stream selected');
                 break;
 
                 case _parentObj.playlist_mode.manual:
-                    _parentObj.setTooltips(false,'<b>Clik into the image</b> <br/>in order to select manually');
+                    $('.showFormatSelectionBox').show();
+                    _parentObj.setTooltips('.ytbPlaylistItem div','In order to select format <u>more specifically</u> click into <b>the cog icon</b>');
                 break;
 
             }
 
         },
-        openLightBox:function(url){
+        openLightBox:function(url,e){
+
             try{
-                var run = url instanceof Object?$(this).attr('youtube_url'):url;
+                //if it's jquery object pick up video id from attribute
+                var run = url instanceof Object?"$https://www.youtube.com/watch?v="+$(this).attr('youtube_id'):url;
+
             }catch(e){
                 var run = 'https://www.youtube.com/watch?v=XfR9iY5y94s' //easter egg
+
             }finally{
                 lity(run);
             }
+        },
+        updateCog:function(){
+            var _this = this;
+            $('.ytbPlaylistItem').each(function(){
+
+                var el = $(this).find('.showFormatSelectionBox');
+                    el.removeClass('cogSelect cogSelected');
+
+                //anything selected
+                if(!!$(this).attr('video_codec_id') || !!$(this).attr('audio_codec_id')){
+                    el.addClass('cogSelected');
+
+                    var tooltip = [];
+
+                    if(!!$(this).attr('video_desc')){
+                        tooltip.push('<b>Video</b> '+$(this).attr('video_desc'));
+                    }
+
+                    if(!!$(this).attr('audio_desc')){
+                        tooltip.push('<b>Audio</b> '+$(this).attr('audio_desc'));
+                    }
+
+                    _this.setTooltips($(this).children('div'),tooltip.join('<br>'));
+
+                }else{
+
+                    //nothing selected for video
+                    el.addClass('cogSelect');
+                    _this.setTooltips($(this).children('div'),'In order to select format <u>more specifically</u> click into <b>the cog icon</b>');
+
+                };
+            })
         },
         events:function(){
 
@@ -448,13 +495,25 @@ var mate = (function(){
                     return false;
                 }
 
+
                 if($(this).hasClass(classSelector[0])){
                     $(classSelector[1]).find('input').removeAttr('checked').prop('checked',false);
                     $(this).removeClass(classSelector[0]);
+                    //filter extensions per format
+
+                    _this.mapExtensions(
+                        '',
+                        $(this).parent().hasClass('singleAudioFormatsPlaylist')?'singleAudioFormatsPlaylist':'singleVideoFormatsPlaylist'
+                    )
                 }else{
                     $(classSelector[1]).find('tr').removeClass(classSelector[0]);
                     $(this).addClass(classSelector[0]);
                     $(this).find('input').attr('checked','checked').prop('checked',true);
+
+                    _this.mapExtensions(
+                        $(this).attr('extension'),
+                        $(this).parent().hasClass('singleAudioFormatsPlaylist')?'singleAudioFormatsPlaylist':'singleVideoFormatsPlaylist'
+                    )
                 }
 
             });
@@ -464,6 +523,24 @@ var mate = (function(){
                 var amount_selected = $('.ytbPlaylistItem').find('input').filter(':checked').length,
                     selected_vids   = {};
 
+                var selected_mode   = parseInt($('input[name="quality_method_playlist"]:checked').val()),
+                    download_method =   '';
+
+                switch(selected_mode){
+                    case _this.playlist_mode.default:
+                        download_method = 'default';
+                        break;
+                    case _this.playlist_mode.audio:
+                        download_method = 'audio';
+                        break;
+                    case _this.playlist_mode.video:
+                        download_method = 'video';
+                        break;
+                    case _this.playlist_mode.manual:
+                        download_method = 'manual';
+                        break;
+                }
+
                 if(amount_selected){
 
                     $('.ytbPlaylistItem').each(function(){
@@ -472,20 +549,20 @@ var mate = (function(){
 
                             amount_selected++;
 
-                            var download_method  =  $(this).attr('method'),
-                                video_id         =  $(this).attr('youtube_id'),
-                                audio_stream     =  $(this).attr('audio_stream'),
-                                video_stream     =  $(this).attr('video_stream');
+                            var video_id         =  $(this).attr('youtube_id'),
+                                audio_stream     =  $(this).attr('audio_codec_id') || false,
+                                video_stream     =  $(this).attr('video_codec_id') || false;
 
-                            selected_vids[download_method] = {
-                                'method'    :   download_method,
-                                'audio'     :   audio_stream,
-                                'video'     :   video_stream
+                            selected_vids[video_id] = {
+                                'method'        :   download_method,
+                                'audio_stream'  :   audio_stream,
+                                'video_stream'  :   video_stream,
+                                'video_id'      :   video_id
                             }
-
                         }
-
                     })
+
+                    console.log(selected_vids);
 
                 }else{
                     alertify.alert('Error','Please select at least one video');
@@ -601,6 +678,9 @@ var mate = (function(){
                 }
             })
 
+            /*
+            Display playlist selection window
+            */
             $('.playlistBox').on('click','.showFormatSelectionBox',function(e){
 
                 var current_mode = $('input[name="quality_method_playlist"]:checked').val();
@@ -612,7 +692,7 @@ var mate = (function(){
                     return false;
                 }
 
-                var box_element = $(this).parent(),
+                var box_element = $(this).parent().parent(),
                     youtube_id  = box_element.attr('youtube_id');
 
                     _this.setPlaylistFormatSelection(youtube_id);
@@ -620,12 +700,13 @@ var mate = (function(){
                     //set overflow hidden temporarily for body content to prevent of displaying 2 scroll bars simultaneously
                     $('body').css('overflow','hidden');
 
+
                     //if it's checked for manual method
                     if(box_element.attr('method') == 'manual'){
                         //restore format selection
                         _this.restoreFormatSelection(youtube_id);
                     }else{//if it's checked for default method
-                        _this.revertSingleFormatSelection();
+                        _this.revertSingleFormatSelectionPlaylist();
                     }
 
                     $('.playlistFormatSelection').fadeIn();
@@ -639,6 +720,9 @@ var mate = (function(){
 
             })
 
+            /*
+            Save playlist item
+             */
             $('.saveSelection').on('click',function(e){
 
                 $('body').removeAttr('style');
@@ -673,15 +757,18 @@ var mate = (function(){
                         audio_desc = description;
                 };
 
+                //if default method selected
                 if($('.playlistItemBox:checked').val() == 1){
-                    _this.revertSingleFormatSelection();
+                    _this.revertSingleFormatSelectionPlaylist();
                     $('.playlistFormatSelection').fadeOut();
+
+                    _this.updateCog();
                     return;
                 }
 
                 if(selected_audio.length == 0 && selected_video.length == 0 && $('.playlistItemBox:checked').val() != 1){
 
-                    alertify.alert('Error','Please select at least one audio / video format, both audio and video or use default option');
+                    alertify.alert('Error','Please select at least one audio / video format, both audio and video or switch to default mode');
 
                     e.stopImmediatePropagation();
 
@@ -690,6 +777,7 @@ var mate = (function(){
                 }else{
                     $('.playlistFormatSelection').fadeOut();
                 }
+
 
                 var params = {
                     'video_codec_id'   :  video_id,
@@ -701,6 +789,8 @@ var mate = (function(){
 
                 $('.ytbPlaylistItem[youtube_id="'+youtube_id+'"]').attr(params);
 
+
+                _this.updateCog();
             })
 
         },

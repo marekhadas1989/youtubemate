@@ -14,7 +14,20 @@
         color: white;
     }
 
+    .cogSelect{
+        display:none;
+        color:white;
+        background:#007BFF;
+        text-transform:uppercase;
+    }
+
+    .cogSelected{
+        color:white;
+        background:#28a745;
+    }
+
     .youtube_url_lightbox,
+    .youtube_i_lightbox,
     .showFormatSelectionBox,
     .custom-control input,
     .custom-control label,
@@ -228,7 +241,7 @@
 
         <div class="row" style="width:95%;margin-left:2%;max-height:400px;overflow-y:scroll;">
 
-            <div class="col-lg-6 playlistTable disabledBox">
+            <div class="col-lg-6 playlistTable playlistAudioTable disabledBox">
                 <h5>Audio Only</h5>
                 <table class="table DataTable">
 
@@ -249,7 +262,7 @@
                 </table>
             </div>
 
-            <div class="col-lg-6 playlistTable disabledBox">
+            <div class="col-lg-6 playlistTable playlistVideoTable disabledBox">
                 <h5>Video Only</h5>
                 <table class="table DataTable">
 
@@ -290,7 +303,7 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
         <a class="navbar-brand" href="#"><img src="/img/logo.png"></a>
-        <a class="btn btn-primary" href="#">Sign In</a>
+        <div class="col-md-10 text-right"><a style="margin-right:5px" class="btn btn-danger" href="#">Register</a><a class="btn btn-primary" href="#">Log In</a></div>
     </div>
 </nav>
 
@@ -380,7 +393,7 @@
 
                     <div class="col-sm-12 col-md-6 col-lg-6 audioTable formatsBox disabledBox">
                         <h5>Audio Only</h5>
-                        <table class="table table-hover DataTable">
+                        <table class="table DataTable">
 
                             <thead class="thead-dark">
                             <tr>
@@ -399,7 +412,7 @@
 
                     <div class="col-sm-12 col-md-6 col-lg-6 videoTable formatsBox disabledBox">
                         <h5>Video Only</h5>
-                        <table class="table table-hover DataTable">
+                        <table class="table DataTable">
 
                             <thead class="thead-dark">
                             <tr>
@@ -464,7 +477,7 @@
                     <div class="custom-control custom-radio custom-control-inline">
 
                         <input type="radio" name="quality_method_playlist" class="custom-control-input" value="4" id="playlistRadio4">
-                        <label class="custom-control-label" for="playlistRadio4">Manual Choice <code class="highlighter-rouge">(slowest option)</code></label>
+                        <label class="custom-control-label" for="playlistRadio4">Manual Mode <code class="highlighter-rouge">(slowest option)</code></label>
 
                     </div>
                 </div>
@@ -491,35 +504,35 @@
         <h2 class="mb-5">Recently downloaded ...</h2>
         <div class="row">
             <div class="col-lg-3">
-                <div class="youtube_url_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_url="https://www.youtube.com/watch?v=oROoI-bYgGQ">
+                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="oROoI-bYgGQ">
                     <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/bZ5Ncy7TqWA/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCxGUZh3moNwQG1GELuDnZoJbVDgA">
                     <h5>Margaret E.</h5>
                     <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="youtube_url_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_url="https://www.youtube.com/watch?v=1lyu1KKwC74">
+                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="1lyu1KKwC74">
                     <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/QY0HcCXYyOk/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAfSL1uVpsDh0OtGlkca4XWeTyhDA">
                     <h5>Margaret E.</h5>
                     <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="youtube_url_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_url="https://www.youtube.com/watch?v=djV11Xbc914&list=RDQMdPbSog8GRTk&start_radio=1">
+                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="v=djV11Xbc914">
                     <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/lq7dJ25Japs/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLBiKtXon7-PMoIrsEau2JFOrd9sLg">
                     <h5>Margaret E.</h5>
                     <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="youtube_url_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_url="https://www.youtube.com/watch?v=PIb6AZdTr-A&list=RDQMdPbSog8GRTk&index=3">
+                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="PIb6AZdTr-A">
                     <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/KkB8KJV_lYY/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLCPvsXYTVKEF606CzpOOh9qsP1lvg">
                     <h5>Margaret E.</h5>
                     <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="youtube_url_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_url="https://www.youtube.com/watch?v=CdqoNKCCt7A&list=RDQMdPbSog8GRTk&index=4">
+                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="CdqoNKCCt7A">
                     <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/od-U_Zh6FjY/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCl6zDXRRqtFK0HHniLBNgIE18f5g">
                     <h5>Margaret E.</h5>
                     <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
