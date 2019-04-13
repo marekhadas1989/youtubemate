@@ -109,13 +109,21 @@ var mate = (function(){
 
                 }
 
-                $('.playlistBox').append(playlistHTML);
+                $('.playlistBox').html('').append(playlistHTML);
 
                 _this.setTooltips('.ytbPlaylistItem div','<b>Default Audio & Video</b> stream selected');
             }
 
             $('.playlistMainContainer').show();
 
+        },
+        revertSingleVideoToDefault:function(){
+
+            $('.audioTable,.videoTable').addClass('disabledBox');
+            $('input[name="format_method"]').removeAttr('checked').prop('checked',false).eq(0).prop('checked',true).attr('checked','checked');
+
+            $('.singleVideoFormats').find('.selectedVideo').removeClass('selectedVideo');
+            $('.singleAudioFormats').find('.selectedAudio').removeClass('selectedAudio');
         },
         setTooltips:function(element,text){
 
@@ -181,6 +189,7 @@ var mate = (function(){
 
             $('.singleVideoThumbnail').addClass('youtube_url_lightbox').attr('youtube_id',data.available[0].video_id);
             $('.singleVideoThumbnail').attr('src',data.available[0].thumbnail);
+
             $('.singleVideoTitle').text(data.available[0].title);
 
             $('.downloadSingle').attr('video_url',url);
@@ -204,6 +213,7 @@ var mate = (function(){
             }
 
             $('.singleVideoMainContainer').fadeIn();
+
         },
         getVideoData:function(params){
 
@@ -253,6 +263,8 @@ var mate = (function(){
                         _this.getVideoData(params);
                     },
                     function(){
+                        _this.revertSingleVideoToDefault();
+
                         alertify.success('Getting video info');
                         params.playlist_id = false;
                         _this.getVideoData(params);
@@ -393,6 +405,7 @@ var mate = (function(){
         changePlaylistSelectionMethod:function(e){
 
             var _parentObj = e.data.expose;
+                _parentObj.revertSingleFormatSelectionPlaylist();
 
             var newMethod = parseInt($(this).val());
 
@@ -400,6 +413,8 @@ var mate = (function(){
 
             //revert selection on formats
             $('.cogSelected').removeClass('cogSelected').addClass('cogSelect');
+
+
 
             //strict types
             switch(newMethod){
@@ -477,7 +492,6 @@ var mate = (function(){
             $('body').on('change','input[name="quality_method_playlist"]',{ expose : _this},_this.changePlaylistSelectionMethod)
             $('body').on('click','.youtube_url_lightbox',_this.openLightBox);
 
-
             $('.playlistItemBox').on('change',function(){
                 $('.playlistFormatSelection').find('.playlistTable')[$(this).val() == 2?'removeClass':'addClass']('disabledBox');
             })
@@ -495,8 +509,8 @@ var mate = (function(){
                     return false;
                 }
 
-
                 if($(this).hasClass(classSelector[0])){
+
                     $(classSelector[1]).find('input').removeAttr('checked').prop('checked',false);
                     $(this).removeClass(classSelector[0]);
                     //filter extensions per format
@@ -505,7 +519,9 @@ var mate = (function(){
                         '',
                         $(this).parent().hasClass('singleAudioFormatsPlaylist')?'singleAudioFormatsPlaylist':'singleVideoFormatsPlaylist'
                     )
+
                 }else{
+
                     $(classSelector[1]).find('tr').removeClass(classSelector[0]);
                     $(this).addClass(classSelector[0]);
                     $(this).find('input').attr('checked','checked').prop('checked',true);
@@ -514,6 +530,7 @@ var mate = (function(){
                         $(this).attr('extension'),
                         $(this).parent().hasClass('singleAudioFormatsPlaylist')?'singleAudioFormatsPlaylist':'singleVideoFormatsPlaylist'
                     )
+
                 }
 
             });
@@ -524,7 +541,7 @@ var mate = (function(){
                     selected_vids   = {};
 
                 var selected_mode   = parseInt($('input[name="quality_method_playlist"]:checked').val()),
-                    download_method =   '';
+                    download_method = '';
 
                 switch(selected_mode){
                     case _this.playlist_mode.default:
@@ -559,10 +576,30 @@ var mate = (function(){
                                 'video_stream'  :   video_stream,
                                 'video_id'      :   video_id
                             }
+
                         }
+
                     })
 
-                    console.log(selected_vids);
+                    _this.ajax(
+                        'post',
+                        'json',
+                        function(data){
+                            $('input[name="quality_method_playlist"]').removeAttr('checked').prop('checked',false).eq(0).attr('checked','checked').prop('checked',true);
+                            _this.revertSingleFormatSelectionPlaylist();
+
+                            if(data.status){
+                                window.open(data.download_url,'_blank');
+                            }else{
+                                alertify.error('Something went wrong, please try again later.');
+                            }
+
+                        },
+                        '/videos/downloadPlaylist',
+                        {
+                            videos:selected_vids
+                        }
+                    )
 
                 }else{
                     alertify.alert('Error','Please select at least one video');
@@ -639,6 +676,7 @@ var mate = (function(){
                 if(typeof selected_video_format == 'undefined' && typeof selected_audio_format == 'undefined' && !isDefault){
                     alertify.alert('Error','Please select at least one format from the list or use default option');
                 }else{
+
                     _this.ajax(
                         'post',
                         'json',
@@ -659,6 +697,7 @@ var mate = (function(){
                             is_default   : isDefault
                         }
                     )
+
                 };
             })
 
@@ -720,6 +759,14 @@ var mate = (function(){
 
             })
 
+            $('body').on('click','.selectAll',function(){
+                var inp = $('.ytbPlaylistItem').find('input');
+                if(inp.is(':checked')){
+                    inp.removeAttr('checked').prop('checked',false);
+                }else{
+                    inp.attr('checked','checked').prop('checked',true);
+                }
+            })
             /*
             Save playlist item
              */

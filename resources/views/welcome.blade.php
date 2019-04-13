@@ -481,8 +481,11 @@
 
                     </div>
                 </div>
-
+            <div class="col-sm-12 col-md-12 col-lg-12 selectAll" style="cursor:pointer">
+                <i class="far fa-check-circle"></i> Select All / Select None
+            </div>
         </div>
+
 
         <div class="row playlistBox" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
 

@@ -1,5 +1,15 @@
 <?php
 
+function va($p){
+
+    echo '<pre>';
+        print_r($p);
+    echo '</pre>';
+
+    exit;
+
+}
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application

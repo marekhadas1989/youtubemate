@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Symfony\Component\HttpFoundation\Request;
+use ZipArchive;
 
 set_time_limit(0);
 
@@ -21,7 +22,26 @@ class Videos extends Controller
 
     }
 
-    private function mergeVideo($audio_stream,$video_stream){
+    /*
+     * Convert audio into valid mp3 format with VBR
+     */
+    private function convertAudio($file,$filename){
+
+        $new_filename = basename($filename).'_vbr.mp3';
+
+        $ffmpeg_merge = $this->ffmpeg.' -y -i '.$file.$filename.' -vn -ar 44100 -ac 2 -q:a 1 -codec:a libmp3lame '.$file.$new_filename.' 2>&1';
+
+        exec($ffmpeg_merge,$output, $return_var);
+
+        //remove old file
+        @unlink($file.$filename);
+
+    }
+    private function mergeVideo($audio_stream,$video_stream,$playlist = false){
+
+        if(!$playlist){
+            $playlist = '';
+        }
 
         $video_name = basename($video_stream);
         $audio_name = basename($audio_stream);
@@ -37,16 +57,17 @@ class Videos extends Controller
             $ext = $video_ext;
         }
 
-        $save_to = $this->server_dir.DIRECTORY_SEPARATOR.$fname.'.'.$ext;
+        $save_to = $this->server_dir.DIRECTORY_SEPARATOR.$playlist.$fname.'.'.$ext;
 
-        $ffmpeg_merge = $this->ffmpeg.' -i "'.$this->server_dir.DIRECTORY_SEPARATOR.$video_stream.'" -i "'.$this->server_dir.DIRECTORY_SEPARATOR.$audio_stream.'" -c copy "'.$save_to.'" 2>&1';
+        $ffmpeg_merge = $this->ffmpeg.' -i "'.$this->server_dir.DIRECTORY_SEPARATOR.$playlist.$video_stream.'" -i "'.$this->server_dir.DIRECTORY_SEPARATOR.$playlist.$audio_stream.'" -c copy "'.$save_to.'" 2>&1';
 
         exec($ffmpeg_merge,$output, $return_var);
 
+
         if(is_readable($save_to)){
 
-            @unlink($this->server_dir.DIRECTORY_SEPARATOR.$video_stream);
-            @unlink($this->server_dir.DIRECTORY_SEPARATOR.$audio_stream);
+            @unlink($this->server_dir.DIRECTORY_SEPARATOR.$playlist.$video_stream);
+            @unlink($this->server_dir.DIRECTORY_SEPARATOR.$playlist.$audio_stream);
 
             return $fname.'.'.$ext;
 
@@ -223,13 +244,17 @@ class Videos extends Controller
         );
     }
 
-    public function downloadStream($video_format,$url,$random_name = false){
+    public function downloadStream($video_format,$url,$random_name = false,$dir = false){
+
+        if(!$dir){
+            $dir = '';
+        }
 
         if($random_name){
             $random_name = time();
         }
 
-        $filename_command = $this->youtube_dl.' --get-filename --restrict-filenames -o "'.$this->server_dir.'\%(title)s'.$random_name.'.%(ext)s" -f '.$video_format.' '.$url;
+        $filename_command = $this->youtube_dl.' --get-filename --restrict-filenames -o "'.$this->server_dir.'\\'.$dir.'%(title)s'.$random_name.'.%(ext)s" -f '.$video_format.' '.$url;
         exec($filename_command,$output, $return_var);
 
         $file_location = $output[0];
@@ -238,7 +263,7 @@ class Videos extends Controller
         //if file does not already exists
         if(!is_file($this->server_dir.DIRECTORY_SEPARATOR.$filename)){
 
-            $download_command = $this->youtube_dl.' --restrict-filenames -o "'.$this->server_dir.'\%(title)s'.$random_name.'.%(ext)s" -f '.$video_format.' '.$url;
+            $download_command = $this->youtube_dl.' --restrict-filenames -o "'.$this->server_dir.'\\'.$dir.'%(title)s'.$random_name.'.%(ext)s" -f '.$video_format.' '.$url;
             exec($download_command,$video_output, $return_var);
 
         }
@@ -247,20 +272,36 @@ class Videos extends Controller
     }
 
     //default approach do not do anything in regards to selected video just download recommended format
-    private function defaultApproach($url){
+    private function defaultApproach($url,$playlist_dir = false,$format=false){
 
-        $filename_command = $this->youtube_dl.' --get-filename --restrict-filenames -o "'.$this->server_dir.'\%(title)s.%(ext)s" '.$url;
+        if(!$format){
+            $format_param   = '';
+            $format         = '%(ext)s';
+        }elseif($format == 'mp3'){
+            $format_param = '--ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0';
+        }elseif($format == 'mp4'){
+            $format_param = '-f bestvideo';
+        }
+
+
+        if(!$playlist_dir){
+            $playlist_dir = '';
+        }
+
+        $filename_command = $this->youtube_dl.' --get-filename --restrict-filenames '.$format_param.' -o "'.$this->server_dir.'\\'.$playlist_dir.'%(title)s.'.$format.'" '.$url;
+
         exec($filename_command,$output, $return_var);
 
         $file_location = $output[0];
         $filename = basename($file_location);
 
-        $expected_file = $this->server_dir.DIRECTORY_SEPARATOR.$filename;
+
+        $expected_file = $this->server_dir.DIRECTORY_SEPARATOR.$playlist_dir.$filename;
 
         //if file does not already exists
         if(!is_file($expected_file) || !is_readable($expected_file)){
 
-            $download_command = $this->youtube_dl.' --restrict-filenames -o "'.$this->server_dir.'\%(title)s.%(ext)s" '.$url;
+            $download_command = $this->youtube_dl.' --restrict-filenames  '.$format_param.' -o "'.$this->server_dir.'\\'.$playlist_dir.'%(title)s.'.$format.'" '.$url;
             exec($download_command,$video_output, $return_var);
 
         }
@@ -268,6 +309,7 @@ class Videos extends Controller
         //fallback to youtube-dl naming convention if predictions fails for filename
         if(!is_file($expected_file) || !is_readable($expected_file)){
 
+            $f = '';
             foreach($video_output as $o){
 
                 if(strpos($o,'Merging') !== false){
@@ -281,13 +323,127 @@ class Videos extends Controller
                     $f = str_replace('has already been downloaded and merged','',$f);
 
                 };
+
                 continue;
+
             }
 
             $filename = basename(trim($f));
+
         }
 
         return $filename;
+
+    }
+
+    private function zipFiles($folder_to_zip){
+
+        $rootPath = realpath($folder_to_zip);
+
+        // Initialize archive object
+        $zip = new \ZipArchive();
+        $zip->open(basename($folder_to_zip).'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+        // Create recursive directory iterator
+        /** @var SplFileInfo[] $files */
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($rootPath),
+            \RecursiveIteratorIterator::LEAVES_ONLY
+        );
+
+        foreach ($files as $name => $file)
+        {
+            // Skip directories (they would be added automatically)
+            if (!$file->isDir())
+            {
+                // Get real and relative path for current file
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($rootPath) + 1);
+
+                // Add current file to archive
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+
+        $file_to_download = $zip->filename;
+
+        // Zip archive will be created only after closing object
+        $zip->close();
+
+        return $file_to_download;
+
+    }
+    public function downloadPlaylist(Request $req){
+
+        $pd = (time()).'_'.bin2hex(openssl_random_pseudo_bytes(10));
+        $playlist_dir = $this->server_dir.DIRECTORY_SEPARATOR.$pd;
+
+        @mkdir($playlist_dir);
+
+        $files_downloaded = array();
+
+        foreach($req->input('videos') as $vid){
+
+            //audio & video
+            if($vid['method'] == 'manual' && $vid['audio_stream'] != 'false' && $vid['video_stream'] != 'false'){
+
+                $audio_stream = $this->downloadStream($vid['audio_stream'],$vid['video_id'],$random_name = true,$pd.DIRECTORY_SEPARATOR);
+                $video_stream = $this->downloadStream($vid['video_stream'],$vid['video_id'],false,$pd.DIRECTORY_SEPARATOR);
+
+                if($audio_stream && $video_stream){
+                    $filename = $this->mergeVideo($audio_stream,$video_stream,$pd.DIRECTORY_SEPARATOR);
+                }
+                $files_downloaded[$vid['video_id']] = $filename;
+
+            //audio
+            }else if($vid['method'] == 'manual' && $vid['audio_stream'] != 'false' && $vid['video_stream'] == 'false'){
+
+                $filename = $this->downloadStream($vid['audio_stream'],$vid['video_id'],false,$pd.DIRECTORY_SEPARATOR);
+                $files_downloaded[$vid['video_id']] = $filename;
+
+            //video
+            }else if($vid['method'] == 'manual' && $vid['audio_stream'] == 'false' && $vid['video_stream'] != 'false'){
+
+                $filename = $this->downloadStream($vid['video_stream'],$vid['video_id'],false,$pd.DIRECTORY_SEPARATOR);
+                $files_downloaded[$vid['video_id']] = $filename;
+
+            //default
+            }else if($vid['method'] == 'audio'){
+
+                $filename = $this->defaultApproach($vid['video_id'],$pd.DIRECTORY_SEPARATOR,'mp3');
+
+                $downloaded = $playlist_dir.DIRECTORY_SEPARATOR.$filename;
+                $files_downloaded[] = $filename;
+
+                $this->convertAudio($playlist_dir.DIRECTORY_SEPARATOR,$filename);
+
+            }else if($vid['method'] == 'video'){
+
+                $filename = $this->defaultApproach($vid['video_id'],$pd.DIRECTORY_SEPARATOR,'mp4');
+
+                $files_downloaded[$vid['video_id']] = $filename;
+
+            }else{
+
+                $filename = $this->defaultApproach($vid['video_id'],$pd.DIRECTORY_SEPARATOR);
+                $files_downloaded[$vid['video_id']] = $filename;
+            };
+
+        };
+
+
+        $file_to_download = $this->zipFiles($playlist_dir);
+
+        @unlink($playlist_dir);
+
+        return json_encode(
+            array(
+                'status'        =>  true,
+                'download_url'  =>  'http://youtubemate/videos/downloadGateway?file='.basename($file_to_download),
+                'files'         =>  $files_downloaded
+            )
+        );
+
     }
 
     public function downloadSingleVideoByFormat(Request $req){
@@ -325,6 +481,7 @@ class Videos extends Controller
                 }else{
                     echo 'error';
                 }
+
             }elseif(!empty($audio_format)){
 
                 $audio_stream = $this->downloadStream($audio_format,$url);
@@ -351,6 +508,24 @@ class Videos extends Controller
 
     }
 
+    private function handleFileHeaders($file_location,$file_name){
+
+        header('Content-type: '.mime_content_type($file_location));
+        header('Content-Disposition: binary; filename="'.$file_name.'"');
+
+        $handle = fopen($file_location, 'rb');
+        $buffer = '';
+        while (!feof($handle)) {
+            $buffer = fread($handle, 4096);
+            echo $buffer;
+            ob_flush();
+            flush();
+        }
+
+        fclose($handle);
+
+    }
+
     public function downloadGateway(Request $p){
 
         $file_name   = $p->input('file');
@@ -358,16 +533,15 @@ class Videos extends Controller
         if(!empty($file_name)){
 
             $server_file_location = public_path().DIRECTORY_SEPARATOR.'downloads'.DIRECTORY_SEPARATOR.$file_name;
+            $zip_location = public_path().DIRECTORY_SEPARATOR.$file_name;
 
             if(1==1){
                 if (is_file($server_file_location) && is_readable($server_file_location))
                 {
-                    header('Content-type: '.mime_content_type($server_file_location));
-                    header('Content-Disposition: binary; filename="'.basename($file_name).'"');
-                    readfile($server_file_location);
-                }
-                else
-                {
+                    $this->handleFileHeaders($server_file_location,basename($file_name));
+                }elseif(is_file($zip_location) && is_readable($zip_location)){
+                    $this->handleFileHeaders($zip_location,basename($file_name));
+                }else{
                     // file does not exist
                     header("HTTP/1.0 404 Not Found");
                     exit;
@@ -379,13 +553,16 @@ class Videos extends Controller
         }else{
             return 404;//not found
         }
-
-
     }
 
     public function test(){
 
-        $this->va();return;
+        $folder_to_zip = 'C:\Users\wildsnaske\Documents\GitHub\youtubemate\public\downloads\1555177489_cb3cdf6e6da8cccb46b8';//$playlist_dir.DIRECTORY_SEPARATOR
+
+
+        $this->zipFiles($folder_to_zip);
+
+       return;
     }
 
 }

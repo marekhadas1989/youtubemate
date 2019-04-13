@@ -23,3 +23,5 @@ Route::get('/videos/downloadGateway', 'Videos@downloadGateway')->name('Videos');
 
 Route::post('/videos/displayVideosInfo', 'Videos@displayVideosInfo')->name('Videos');
 Route::post('/videos/downloadSingleVideoByFormat', 'Videos@downloadSingleVideoByFormat')->name('Videos');
+Route::post('/videos/downloadPlaylist', 'Videos@downloadPlaylist')->name('Videos');
+
