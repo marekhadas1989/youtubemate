@@ -145,11 +145,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>This project has been made solely for the testing purposes and it will not be developed in future so please use it carefully.</p>
-                <p>Any issues found will not be addressed in future.</p>
-                <p>This project is intended for private purposes only.</p>
-                <p>And damages caused by using it are totally under your responsibility, moreover you should use it only accordingly to the applicable law in your country.</p>
-                <p>Any data processed in here will be ephemeral for the purpose of the demo. Data will neither be persisted nor stored for further usage anywhere.</p>
+               Your text here
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -168,7 +164,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>This is demo project, please refer to the about section.</p>
+                <p>Your text here.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -187,7 +183,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>This project does not use any cookies or any other related technologies for storing any data about it's users or tracking users in future.</p>
+                <p>Your text here.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -303,7 +299,15 @@
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
         <a class="navbar-brand" href="#"><img src="/img/logo.png"></a>
-        <div class="col-md-10 text-right"><a style="margin-right:5px" class="btn btn-danger" href="#">Register</a><a class="btn btn-primary" href="#">Log In</a></div>
+        <div class="col-md-10 text-right">
+            @if (Auth::check())
+                <a class="btn btn-primary" href="/logout">Log Out</a>
+            @else
+                <a style="margin-right:5px" class="btn btn-danger" href="/register">Register</a>
+                <a class="btn btn-primary" href="/login">Log In</a>
+            @endif
+
+        </div>
     </div>
 </nav>
 
@@ -506,41 +510,18 @@
     <div class="container">
         <h2 class="mb-5">Recently downloaded ...</h2>
         <div class="row">
-            <div class="col-lg-3">
-                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="oROoI-bYgGQ">
-                    <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/bZ5Ncy7TqWA/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCxGUZh3moNwQG1GELuDnZoJbVDgA">
-                    <h5>Margaret E.</h5>
-                    <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
+
+            <?php foreach($recently_downloaded as $rd):?>
+
+                <div class="col-lg-3" style="margin-bottom:10px">
+                    <div class="youtube_url_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="<?php echo $rd->video_id;?>">
+                        <img class="img-fluid  mb-3" src="<?php echo $rd->thumbnail;?>">
+                        <h5><?php echo $rd->channel_name;?></h5>
+                        <p class="font-weight-light mb-0"><?php echo $rd->video_title;?></p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="1lyu1KKwC74">
-                    <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/QY0HcCXYyOk/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAfSL1uVpsDh0OtGlkca4XWeTyhDA">
-                    <h5>Margaret E.</h5>
-                    <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="v=djV11Xbc914">
-                    <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/lq7dJ25Japs/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLBiKtXon7-PMoIrsEau2JFOrd9sLg">
-                    <h5>Margaret E.</h5>
-                    <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="PIb6AZdTr-A">
-                    <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/KkB8KJV_lYY/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLCPvsXYTVKEF606CzpOOh9qsP1lvg">
-                    <h5>Margaret E.</h5>
-                    <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="youtube_i_lightbox testimonial-item mx-auto mb-5 mb-lg-0" youtube_id="CdqoNKCCt7A">
-                    <img class="img-fluid  mb-3" src="https://i.ytimg.com/vi/od-U_Zh6FjY/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCl6zDXRRqtFK0HHniLBNgIE18f5g">
-                    <h5>Margaret E.</h5>
-                    <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
-                </div>
-            </div>
+            <?php endforeach;?>
+
         </div>
     </div>
 </section>
@@ -558,7 +539,7 @@
                     </li>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">
-                        <a href="mailto:biznesowy@gmail.com">Contact</a>
+                        <a href="mailto:you@gmail.com">Contact</a>
                     </li>
                     <li class="list-inline-item">&sdot;</li>
                     <li class="list-inline-item">

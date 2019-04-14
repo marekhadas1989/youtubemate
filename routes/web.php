@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $videos = new \App\Videos();
+
+    return view('welcome',array(
+        'recently_downloaded'=>$videos->getRecentlyAdded())
+    );
 });
 
 Route::get('/videos/test', 'Videos@test')->name('Videos');
@@ -25,3 +29,11 @@ Route::post('/videos/displayVideosInfo', 'Videos@displayVideosInfo')->name('Vide
 Route::post('/videos/downloadSingleVideoByFormat', 'Videos@downloadSingleVideoByFormat')->name('Videos');
 Route::post('/videos/downloadPlaylist', 'Videos@downloadPlaylist')->name('Videos');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', function(){
+    Auth::logout();
+    return Redirect::to('/');
+});
