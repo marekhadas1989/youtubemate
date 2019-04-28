@@ -491,7 +491,7 @@
         </div>
 
 
-        <div class="row playlistBox" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
+        <div class="row playlistBox" playlist_id="" style="border:dotted 1px #037DFF;padding:10px;margin-top:20px">
 
         </div>
 

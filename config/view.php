@@ -14,6 +14,7 @@ return [
     */
 
     'paths' => [
+        'cache' => false,
         resource_path('views'),
     ],
 

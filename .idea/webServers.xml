@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3a4a9b0a-150c-48f1-8ee2-66a0fba6ea0d" name="youtubemate" url="http://20.20.20.20">
+        <fileTransfer host="20.20.20.20" port="22" rootFolder="/var/www/html/youtubemate" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

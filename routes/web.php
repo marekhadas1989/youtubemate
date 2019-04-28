@@ -29,6 +29,9 @@ Route::post('/videos/displayVideosInfo', 'Videos@displayVideosInfo')->name('Vide
 Route::post('/videos/downloadSingleVideoByFormat', 'Videos@downloadSingleVideoByFormat')->name('Videos');
 Route::post('/videos/downloadPlaylist', 'Videos@downloadPlaylist')->name('Videos');
 
+Route::get('/cron/downloadVideos', 'Cron@downloadVideos')->name('cron');
+Route::get('/cron/downloadThumbnails', 'Cron@downloadThumbnails')->name('cron');
+
 
 Auth::routes();
 

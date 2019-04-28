@@ -109,7 +109,7 @@ var mate = (function(){
 
                 }
 
-                $('.playlistBox').html('').append(playlistHTML);
+                $('.playlistBox').html('').append(playlistHTML).attr('playlist_id',data.playlist_id);
 
                 _this.setTooltips('.ytbPlaylistItem div','<b>Default Audio & Video</b> stream selected');
             }
@@ -543,6 +543,8 @@ var mate = (function(){
                 var selected_mode   = parseInt($('input[name="quality_method_playlist"]:checked').val()),
                     download_method = '';
 
+                var playlist_id = $('.playlistBox').attr('playlist_id');
+
                 switch(selected_mode){
                     case _this.playlist_mode.default:
                         download_method = 'default';
@@ -597,7 +599,8 @@ var mate = (function(){
                         },
                         '/videos/downloadPlaylist',
                         {
-                            videos:selected_vids
+                            videos      :   selected_vids,
+                            playlist    :   playlist_id
                         }
                     )
 
