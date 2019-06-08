@@ -9,6 +9,7 @@ class Videos extends Model
 {
     public function getRecentlyAdded() {
 
+
         $data = DB::table('youtube_videos')
             ->select('*')
            # ->where('active',1)
