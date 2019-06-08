@@ -9,7 +9,7 @@ class Videos extends Model
 {
     public function getRecentlyAdded() {
 
-
+return array();
         $data = DB::table('youtube_videos')
             ->select('*')
            # ->where('active',1)
@@ -22,7 +22,7 @@ class Videos extends Model
     }
 
     public function insertVideoIntoQueue($command,Array $params){
-
+        return array();
         $values = array(
             'command'=>$command
         );
@@ -37,14 +37,14 @@ class Videos extends Model
     }
 
     public function setStatus($id,$status){
-
+        return array();
         DB::table('youtube_videos')
             ->where('id', $id)
             ->update(['status' => $status]);
     }
 
     public function thumbnailssToDownload(){
-
+        return array();
         $data = DB::table('youtube_videos')
             ->select('*')
             //->where('status',1)
@@ -57,7 +57,7 @@ class Videos extends Model
     }
 
     public function videosToDownload() {
-
+        return array();
         $data = DB::table('youtube_videos')
             ->select('*')
             //->where('status',1)
