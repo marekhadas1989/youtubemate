@@ -18,6 +18,7 @@ class Videos extends Controller
 
     public function __construct()
     {
+
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 
             $this->platform     = 'Windows';
@@ -162,9 +163,15 @@ class Videos extends Controller
      */
     private function parseAvailableFormatsJSON($video){
 
-        //format code  extension  resolution note
-        exec($this->youtube_dl.' -j '.$video,$output, $return_var);
+        $command = $this->youtube_dl.' -j '.$video;
 
+
+        //format code  extension  resolution note
+        exec($command,$output, $return_var);
+
+        if(empty($output[0])){
+            return false;
+        }
         $response = json_decode($output[0]);
 
         $processed_videos   = array();
@@ -240,6 +247,7 @@ class Videos extends Controller
         $video_id       = $req->input('video_id');
         $playlist_id    = $req->input('playlist_id');
         $url            = $req->input('url');
+
 
         if($playlist_id == 'false'){
             $response = $this->getVideoInfo($video_id);
@@ -323,6 +331,8 @@ class Videos extends Controller
         }
 
         $download_command = $this->youtube_dl.' --restrict-filenames'.$format_param.' -o "'.$this->server_dir.DIRECTORY_SEPARATOR.$playlist_dir.'%(title)s.'.$format.'" '.$url;
+
+
         parse_str( parse_url( $url, PHP_URL_QUERY ), $match );
 
         $params = array(
@@ -331,6 +341,7 @@ class Videos extends Controller
             'video_format_id'   =>  $video_format_id,
             'audio_format_id'   =>  $audio_format_id
         );
+
 
         $dbv = new \App\Videos();
         $task_id = $dbv->insertVideoIntoQueue(

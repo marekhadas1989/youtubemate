@@ -1,5 +1,18 @@
 <?php
 
+/*
+ * download from txt
+ *
+https://www.youtube.com/watch?v=SDTZ7iX4vTQ
+https://www.youtube.com/watch?v=6FEDrU85FLE
+https://www.youtube.com/watch?v=YgSPaXgAdzE
+youtube-dl --restrict-filenames -o "/mmc128gb/%(title)s.%(ext)s" --batch-file='test.txt'
+ */
+function va($p){
+    echo '<pre>';
+    print_r($p);
+    echo '</pre>';
+}
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
@@ -8,6 +21,66 @@
  */
 
 define('LARAVEL_START', microtime(true));
+
+set_time_limit(0);
+
+exec('youtube-dl -g https://www.youtube.com/watch?v=9OFpfTd0EIs&list=RD1lyu1KKwC74&index=26',$output);
+
+function getFileSize($url){
+
+    $ch = curl_init( $url );
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+
+    $data = curl_exec($ch);
+    $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+
+    curl_close($ch);
+
+    //returns file size in MB
+    echo round($size/1024/1024,2);
+}
+
+function downloadFile($file_to_download,$file_name){
+
+    file_put_contents( 'progress.txt', '' );
+
+    $targetFile = fopen( $file_name, 'w' );
+    $ch = curl_init( $file_to_download );
+
+    curl_setopt( $ch, CURLOPT_PROGRESSFUNCTION, 'progressCallback' );
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt( $ch, CURLOPT_NOPROGRESS, false );
+
+    curl_setopt( $ch, CURLOPT_FILE, $targetFile );
+    curl_exec( $ch );
+
+    fclose( $targetFile );
+
+}
+
+function progressCallback ($resource, $download_size, $downloaded_size, $upload_size, $uploaded_size)
+{
+
+    static $previousProgress = 0;
+
+    if ($download_size == 0) {
+        $progress = 0;
+    }else{
+        $progress = round($downloaded_size * 100 / $download_size, 2);
+    }
+
+
+    if ( $progress > $previousProgress)
+    {
+        $previousProgress = $progress;
+        file_put_contents('progress2.txt', $progress);
+
+    }
+
+}
 
 /*
 |--------------------------------------------------------------------------
